@@ -2,12 +2,12 @@ links:
   - name: Our Discord
     url: https://discord.gg/hskSjBNejE
   - name: Main
-    url: index.html
+    url: index
   - name: CFG Bypass
-    url: cfgbypass.html
+    url: cfgbypass
   - name: Offsets
-    url: Offsets.html
+    url: Offsets
   - name: Client Offsets
-    url: ClientOffsets.html
+    url: ClientOffsets
   - name: Shuffles & Enc
-    url: Shuffles_&_Enc.html
+    url: Shuffles_&_Enc
