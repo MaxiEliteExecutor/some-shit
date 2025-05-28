@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <aside id="sidebar">
+            <ul id="nav-links">
+            </ul>
+        </aside>
+
+        <main id="content">
+            <h1>Welcome to documentation about Hyperion and how to bypass it!</h1>
+            <p>On the left side you can see every option you can select</p>
+        </main>
+    </div>
+
+    <!-- JS YAML library -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script>
+        fetch('yamls/nav.yaml')
+            .then(response => response.text())
+            .then(yamlText => {
+                const data = jsyaml.load(yamlText);
+                const navLinks = document.getElementById('nav-links');
+
+                data.links.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.name;
+                    li.appendChild(a);
+                    navLinks.appendChild(li);
+                });
+            })
+            .catch(err => console.error('Error loading YAML:', err));
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <aside id="sidebar">
+            <ul id="nav-links">
+            </ul>
+        </aside>
+
+        <main id="content">
+            <h1 id="yaml-title">Loading title...</h1>
+            <p id="yaml-description">Loading description...</p>
+            <div class="code-block">
+                <ul>
+                    <li>
+                        <a id="textToCopy" class="copy-block">copy</a>
+                        <a id="yaml-type" class="what-language">Loading type...</a>
+                    </li>
+                    <li>
+                        <pre><code id="yaml-code" class="language-cpp">Loading script...</code></pre>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function loadYAML() {
+            try {
+                const response = await fetch('yamls/data_for_cfgbypass.yaml');
+                const yamlText = await response.text();
+                const data = jsyaml.load(yamlText);
+
+                document.getElementById('yaml-title').textContent = data.title;
+                document.getElementById('yaml-description').textContent = data.description;
+                document.getElementById('yaml-type').textContent = data.script_block.type;
+
+                const codeElement = document.getElementById('yaml-code');
+                codeElement.textContent = data.script_block.content;
+                codeElement.className = 'language-' + data.script_block.type.toLowerCase();
+
+                Prism.highlightElement(codeElement);
+            } catch (error) {
+                console.error('Failed to load YAML:', error);
+            }
+        }
+
+        document.getElementById("textToCopy").addEventListener("click", function () {
+            const codeElement = document.getElementById("yaml-code");
+            const text = codeElement.textContent.trim();
+
+            navigator.clipboard.writeText(text)
+                .then(() => alert("Code copied!"))
+                .catch(err => alert("Failed to copy: " + err));
+        });
+        fetch('yamls/nav.yaml')
+            .then(response => response.text())
+            .then(yamlText => {
+                const data = jsyaml.load(yamlText);
+                const navLinks = document.getElementById('nav-links');
+
+                data.links.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.textContent = link.name;
+                    li.appendChild(a);
+                    navLinks.appendChild(li);
+                });
+            })
+            .catch(err => console.error('Error loading YAML:', err));
+        loadYAML();
+    </script>
+</body>
+</html>

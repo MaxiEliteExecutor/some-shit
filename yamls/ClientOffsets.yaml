@@ -1,0 +1,191 @@
+title: Client Offsets
+description: Offsets for RobloxPlayerBeta.exe memory segments.
+script_block:
+  type: c++
+  content: |
+    // YuB-X Version: 1.0.6
+    // Roblox Version: version-e00a4ca39fb04359 
+    // Dump Time:      2025-05-20 21:45:17
+
+    #pragma once
+
+    #include <Windows.h>
+    #include <vector>
+
+    struct lua_State;
+
+    inline const uintptr_t Base = (uintptr_t)GetModuleHandle(nullptr);
+    #define REBASE(x) (Base + (x))
+
+    inline const uintptr_t Hyperion_Base = (uintptr_t)GetModuleHandle("RobloxPlayerBeta.dll");
+    #define Hyperion_Rbase(x) (Hyperion_Base + (x))
+
+    namespace Offsets {
+        const uintptr_t dumpsetinsert             = REBASE(0xE15010);
+        const uintptr_t BitMap                    = Hyperion_Rbase(0x2750F8);
+        const uintptr_t whitelist                 = REBASE(0x2730A8);
+
+        const uintptr_t Print                     = REBASE(0x14C8360);
+        const uintptr_t RawScheduler              = REBASE(0x65DDF18);
+        const uintptr_t GetGlobalState            = REBASE(0xD2F660);
+        const uintptr_t DecryptLuaState           = REBASE(0xAD0240);
+        const uintptr_t LuaVM__Load               = REBASE(0xAD32E0);
+        const uintptr_t RequestCode               = REBASE(0x897290);
+        const uintptr_t PushInstance              = REBASE(0xE06B50);
+        const uintptr_t PushInstance2             = REBASE(0xE06BA0);
+        const uintptr_t Luau_Execute              = REBASE(0x25E3B50);
+        const uintptr_t Task__Defer               = REBASE(0xF5DB40);
+        const uintptr_t Task__Spawn               = REBASE(0xF5DE30);
+        const uintptr_t LuaD_throw                = REBASE(0x25B0DE0);
+        const uintptr_t LuaO_NilObject            = REBASE(0x45099D8);
+        const uintptr_t LuaH_DummyNode            = REBASE(0x4509108);
+        const uintptr_t KTable                    = REBASE(0x61081A0);
+        const uintptr_t FakeDataModel             = REBASE(0x651E3B8);
+
+        const uintptr_t FireMouseClick            = REBASE(0x1BC08B0);
+        const uintptr_t FireRightMouseClick       = REBASE(0x1BC0A50);
+        const uintptr_t FireMouseHoverEnter       = REBASE(0x1BC1E50);
+        const uintptr_t FireMouseHoverLeave       = REBASE(0x1BC1FF0);
+        const uintptr_t FireTouchInterest         = REBASE(0x13B0C30);
+        const uintptr_t GetIdentityStruct         = REBASE(0x3674BD0);
+        const uintptr_t IdentityPtr               = REBASE(0x613BB48);
+        const uintptr_t GetProperty               = REBASE(0x9E7780);
+        const uintptr_t FireProximityPrompt       = REBASE(0x1C92D30);
+
+        namespace InternalFastFlags {
+            const uintptr_t EnableLoadModule                  = REBASE(0x5D7FE38);
+            const uintptr_t DebugCheckRenderThreading         = REBASE(0x5DA2A88);
+            const uintptr_t RenderDebugCheckThreading2        = REBASE(0x5DD0650);
+            const uintptr_t DisableCorescriptLoadstring       = REBASE(0x5D7FE18);
+            const uintptr_t RuntimeCrashOnHang                = REBASE(0x5DC0EC0);
+            const uintptr_t CapsMissUnassignedTelemetry       = REBASE(0x5DBBE40);
+            const uintptr_t LuaStepIntervalMsOverrideEnabled  = REBASE(0x5D825D8);
+        }
+
+        namespace ScriptContext {
+            const uintptr_t GlobalState  = 0x140;
+            const uintptr_t EncryptedState = 0x88;
+        }
+
+        namespace DataModel {
+            const uintptr_t FakeDataModel = REBASE(0x651E3B8);
+            const uintptr_t FakeDataModelToDataModel  = 0x1B8;
+            const uintptr_t PlaceId                   = 0x1A0;
+            const uintptr_t ScriptContext             = 0x3B0;
+        }
+
+        namespace Instance {
+            const uintptr_t ClassDescriptor           = 0x18;
+            const uintptr_t PropertyDescriptor        = 0x3B8;
+            const uintptr_t ClassName                 = 0x8;
+            const uintptr_t Name                      = 0x78;
+            const uintptr_t Children                  = 0x80;
+        }
+
+        namespace Scripts {
+            const uintptr_t LocalScriptEmbedded       = 0x1B0;
+            const uintptr_t ModuleScriptEmbedded      = 0x158;
+            const uintptr_t weak_thread_node          = 0x188;
+            const uintptr_t weak_thread_ref           = 0x8;
+            const uintptr_t weak_thread_ref_live      = 0x20;
+            const uintptr_t weak_thread_ref_live_thread = 0x8;
+        }
+
+        namespace ExtraSpace {
+            const uintptr_t Identity                  = 0x30;
+            const uintptr_t Capabilities              = 0x48;
+        }
+
+        namespace TaskScheduler {
+            const uintptr_t FpsCap                    = 0x1B0;
+        }
+    }
+
+    namespace RBX {
+        using TPrint = void(__fastcall*)(int, const char*);
+        inline auto Print = (TPrint)Offsets::Print;
+
+        using TLuaVM__Load = int(__fastcall*)(lua_State*, void*, const char*, int);
+        inline auto LuaVM__Load = (TLuaVM__Load)Offsets::LuaVM__Load;
+
+        using TTask__Defer = int(__fastcall*)(lua_State*);
+        inline auto Task__Defer = (TTask__Defer)Offsets::Task__Defer;
+
+        using TGetGlobalState = uintptr_t(__fastcall*)(uintptr_t, int32_t*, uintptr_t*);
+        inline auto GetGlobalState = (TGetGlobalState)Offsets::GetGlobalState;
+
+        using TDecryptLuaState = uintptr_t(__fastcall*)(uintptr_t);
+        inline auto DecryptLuaState = (TDecryptLuaState)Offsets::DecryptLuaState;
+
+        using TPushInstance = void(__fastcall*)(lua_State* state, void* instance);
+        inline auto PushInstance = (TPushInstance)Offsets::PushInstance;
+
+        using TLuaD_throw = void(__fastcall*)(lua_State*, int);
+        inline auto LuaD_throw = (TLuaD_throw)Offsets::LuaD_throw;
+
+        using TGetProperty = uintptr_t*(__thiscall*)(uintptr_t, uintptr_t*);
+        inline auto GetProperty = (TGetProperty)Offsets::GetProperty;
+
+        using TFireMouseClick = void(__fastcall*)(__int64 a1, float a2, __int64 a3);
+        inline auto FireMouseClick = (TFireMouseClick)Offsets::FireMouseClick;
+
+        using TFireRightMouseClick = void(__fastcall*)(__int64 a1, float a2, __int64 a3);
+        inline auto FireRightMouseClick = (TFireRightMouseClick)Offsets::FireRightMouseClick;
+
+        using TFireMouseHoverEnter = void(__fastcall*)(__int64 a1, __int64 a2);
+        inline auto FireMouseHoverEnter = (TFireMouseHoverEnter)Offsets::FireMouseHoverEnter;
+
+        using TFireMouseHoverLeave = void(__fastcall*)(__int64 a1, __int64 a2);
+        inline auto FireMouseHoverLeave = (TFireMouseHoverLeave)Offsets::FireMouseHoverLeave;
+
+        using TFireTouchInterest = void(__fastcall*)(uintptr_t, uintptr_t, uintptr_t, bool, bool);
+        inline auto FireTouchInterest = (TFireTouchInterest)Offsets::FireTouchInterest;
+
+        using TFireProxmityPrompt = std::uintptr_t(__fastcall*)(std::uintptr_t prompt);
+        inline auto FireProximityPrompt = (TFireProxmityPrompt)Offsets::FireProximityPrompt;
+
+        using TRequestCode = uintptr_t(__fastcall*)(uintptr_t protected_string_ref, uintptr_t script);
+        inline auto RequestCode = (TRequestCode)Offsets::RequestCode;
+
+        using TGetIdentityStruct = uintptr_t(__fastcall*)(uintptr_t);
+        inline auto GetIdentityStruct = (TGetIdentityStruct)Offsets::GetIdentityStruct;
+
+        using TGetGlobalStateForInstance = uintptr_t(__fastcall*)(uintptr_t, uintptr_t*, uintptr_t*);
+        inline auto GetGlobalStateForInstance = (TGetGlobalStateForInstance)Offsets::GetGlobalState;
+
+        using TDecryptState = lua_State * (__fastcall*)(uintptr_t);
+        inline auto DecryptState = (TDecryptState)Offsets::DecryptLuaState;
+
+        inline std::string RequestBytecode(uintptr_t scriptPtr) {
+            uintptr_t code[0x4];
+            std::memset(code, 0, sizeof(code));
+
+            RequestCode((std::uintptr_t)code, scriptPtr);
+
+            std::uintptr_t bytecodePtr = code[1];
+
+            if (!bytecodePtr) { return "Failed to get bytecode"; }
+
+            std::uintptr_t str = bytecodePtr + 0x10;
+            std::uintptr_t data;
+
+            if (*reinterpret_cast<std::size_t*>(str + 0x18) > 0xf) {
+                data = *reinterpret_cast<std::uintptr_t*>(str);
+            }
+            else {
+                data = str;
+            }
+
+            std::string BOOOHOOOOOOOO;
+            std::size_t len = *reinterpret_cast<std::size_t*>(str + 0x10);
+            BOOOHOOOOOOOO.reserve(len);
+
+            for (unsigned i = 0; i < len; i++) {
+                BOOOHOOOOOOOO += *reinterpret_cast<char*>(data + i);
+            }
+
+            if (BOOOHOOOOOOOO.size() <= 8) { "Failed to get bytecode"; }
+
+            return BOOOHOOOOOOOO;
+        }
+    }
